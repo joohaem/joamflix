@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.js": "/joamflix/static/js/main.c7fd6a9e.chunk.js",
+    "main.js.map": "/joamflix/static/js/main.c7fd6a9e.chunk.js.map",
+    "runtime-main.js": "/joamflix/static/js/runtime-main.545305be.js",
+    "runtime-main.js.map": "/joamflix/static/js/runtime-main.545305be.js.map",
+    "static/js/2.5f1d31b5.chunk.js": "/joamflix/static/js/2.5f1d31b5.chunk.js",
+    "static/js/2.5f1d31b5.chunk.js.map": "/joamflix/static/js/2.5f1d31b5.chunk.js.map",
+    "index.html": "/joamflix/index.html",
+    "static/js/2.5f1d31b5.chunk.js.LICENSE.txt": "/joamflix/static/js/2.5f1d31b5.chunk.js.LICENSE.txt",
+    "static/media/noPosterSmall.png": "/joamflix/static/media/noPosterSmall.ea2ad102.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.545305be.js",
+    "static/js/2.5f1d31b5.chunk.js",
+    "static/js/main.c7fd6a9e.chunk.js"
+  ]
+}

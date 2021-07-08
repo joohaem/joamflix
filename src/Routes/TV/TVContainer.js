@@ -33,7 +33,7 @@ export default class extends React.Component {
        // throw Error();
      } catch {
        this.setState({
-         error: "Can't find TV information."
+         error: "결과를 불러 올 수 없습니다."
        });
      } finally {
        this.setState({ loading: false });

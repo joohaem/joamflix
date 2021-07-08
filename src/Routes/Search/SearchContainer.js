@@ -6,18 +6,27 @@ export default class extends React.Component {
   state = {
     movieResults: null,
     tvResults: null,
-    searchTerm: "code",
+    searchTerm: "",
     loading: false,
     // 디폴트로 아무것도 로딩하지 않음
     error: null
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    console.log(e);
+    e.preventDefault();
     const { searchTerm } = this.state;
     if (searchTerm !== "") {
       this.searchByTerm();
     }
   };
+
+  updateTerm = (e) => {
+    const {
+      target: { value }
+    } = e;  //e.target.value --> value
+    this.setState({ searchTerm: value });
+  }
 
   searchByTerm = async () => {
     const { searchTerm } = this.state;
@@ -33,8 +42,9 @@ export default class extends React.Component {
         movieResults, //movieResults: movieResults,
         tvResults
       });
+      // throw Error();
     } catch {
-      this.setState({ error: "Can't find results." });
+      this.setState({ error: "결과를 불러 올 수 없습니다." });
     } finally {
       this.setState({ loading: false });
     }
@@ -51,6 +61,7 @@ export default class extends React.Component {
         loading={loading}
         error={error}
         handleSubmit={this.handleSubmit}
+        updateTerm={this.updateTerm}
       />
     );
   }

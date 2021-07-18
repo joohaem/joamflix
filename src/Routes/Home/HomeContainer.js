@@ -13,6 +13,7 @@ export default class extends React.Component {
     loading: true
   };
 
+  
   async componentDidMount() {
     //async, await: 끝날 때까지 다음 진행 X
     try {
@@ -20,6 +21,7 @@ export default class extends React.Component {
         data: { results: nowPlaying }
         //객체 구조 분해 할당(Destructuring)으로 변수명 설정
       } = await moviesApi.nowPlaying();
+      // console.log(moviesApi, moviesApi.nowPlaying());
       const {
         data: { results: upcoming }
       } = await moviesApi.upcoming();
@@ -45,7 +47,7 @@ export default class extends React.Component {
 
   render() {
     const { nowPlaying, upcoming, popular, error, loading } = this.state;
-    // console.log(this.state);
+    console.log(this.state);
     return (
       <HomePresenter
         nowPlaying={nowPlaying}

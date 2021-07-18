@@ -74,7 +74,7 @@ return (
 ```
 HashRouter(#)가 아닌 BrowserRouter는 github pages에 업로드하기 번거롭다
 HashRouter는 웹이 아닌 앱에 있다는 느낌을 줌, 페이지의 Hash를 사용한다
--> a 태그 대신 Link 태그를 이용한다
+-> a 태그 대신 Link 태그를 이용한다 (새로고침을 막아줌)
 BrowserRouter는 HTML history API를 사용한다
 
 ## Router Composition (render)
@@ -134,6 +134,8 @@ const List = styled.ul`
 위와 같이 css 문법을 선언하고 ul 태그를 List 태그로 변경하여 작성한다.
 + Link) 다음과 같이 a 태그와 href 속성은 Link 태그와 to를 사용하여 표현 가능
 Link 태그는 Router 밖에서 작동할 수 없으므로 App.js 파일이 아닌 Router.js 파일에 Header 컴포넌트를 넣는다
+
+단, 외부 사이트를 이용할 경우, Link to는 ~#/https://~  로 지정되므로 a 태그를 사용한다 (DetailPresent)
 ```javascript
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -316,6 +318,7 @@ Router에
 prop-types로 자료형 지정
 styled-components로 CSS 지정
 Components/Section.js 파일에 title과 mapping할 children을 props로 만든다
+기본적으로 React Component는 children이라고 하는 optional prop을 가진다
 ```javascript
 const Section = ({ title, children }) => (
   <Container>
@@ -351,7 +354,7 @@ background-image: url(${props => props.bgUrl});
 ## React Helmet
 >npm install react-helmet
 
-Helpmet은 웹 사이트의 head를 수정하기 쉽다
+Helmet은 웹 사이트의 head를 수정하기 쉽다
 예를 들어 Joamflix의 head title을 Detail 페이지로 들어가면 영화 제목을 덧붙인 head title로 변경할 수 있다
 -> Presenter에서 최상위 Fragment를 만들고, 자식으로 Helmet 태그를 생성한다
 ```javascript

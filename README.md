@@ -93,19 +93,81 @@ Composition은 두 개 이상의 Route를 Rendering한다
 -> from=”*” 이므로 일치하는 Route와 함께 Render 되므로 Switch 사용
 <Switch> </Switch>는 한 번에 한 Route씩 Render 되게 해준다
 
+## Link
+
+a 태그는 페이지가 새로고침 되면서 리액트가 죽게 된다
+
+따라서 a 태그와 href 속성은 Link 태그와 to를 사용하여 표현 가능
+
+Link 태그는 Router 밖에서 작동할 수 없으므로 App.js 파일이 아닌 Router.js 파일에 Header 컴포넌트를 넣는다
+
+단, 외부 사이트를 이용할 경우, Link to는 ```.../#/https://...```  로 지정되므로 a 태그를 사용한다 (DetailPresent)
+
+다음은 각각 Link를 사용한 Header와 Router의 예시이다
+
+```javascript
+import React from "react";
+import { Link } from "react-router-dom";
+const Header = () => (
+  <header>
+    <ul>
+      <li>
+        <Link to="/prices">Prices</Link>
+      </li>
+      <li>
+        <Link to="/exchanges">Exchanges</Link>
+      </li>
+      <li>
+        <Link to="/coins">Coins</Link>
+      </li>
+    </ul>
+  </header>
+);
+export default Header;
+```
+
+```javascript
+import React from "react";
+import {
+  HashRouter as Router, Route
+} from "react-router-dom";
+import Header from "./Header";
+import Coins from "../Screens/Coins";
+import Exchanges from "../Screens/Exchanges";
+import Prices from "../Screens/Prices";
+
+export default () => {
+  return (
+    <Router>
+      <Header />
+      <Route path="/coins" exact component={Coins} />
+      <Route path="/exchanges" component={Exchanges} />
+      <Route path="/prices" component={Prices} />
+    </Router>
+  );
+};
+```
+
 ## CSS
 (+ flex 공부 필요)
 태그 내 class로 쓰면 JS의 "class"와 혼동하므로 “className”으로 이용
 각 Component로 Application의 부분을 캡슐화했으므로,
+
 css를 추가할 때는 Header 폴더 (Header.js, Header.css, index.js)로 생성한다.
+
 index.js는
+
 ```javascript
 import Header from "./Header";
 export default Header;
 ```
+
 CSS 모듈
+
 -> className을 Randomize(임의화)화여 css가 local이 되도록
+
 Header.js에서 js 모듈을 선언하는 것과 같이 import, className을 설정한다.
+
 ```javascript
 import styles from "./Header.module.css";
 /
@@ -117,6 +179,7 @@ Styled-Components (SC; Randomized, Local)
 > npm install styled-components
 
 js 파일 안에서 css와 js를 통합하여 작성할 수 있다.
+
 ```javascript
 import styled from "styled-components";
 
@@ -131,11 +194,13 @@ const List = styled.ul`
 ~
 </List>
 ```
-위와 같이 css 문법을 선언하고 ul 태그를 List 태그로 변경하여 작성한다.
-+ Link) 다음과 같이 a 태그와 href 속성은 Link 태그와 to를 사용하여 표현 가능
-Link 태그는 Router 밖에서 작동할 수 없으므로 App.js 파일이 아닌 Router.js 파일에 Header 컴포넌트를 넣는다
 
-단, 외부 사이트를 이용할 경우, Link to는 ~#/https://~  로 지정되므로 a 태그를 사용한다 (DetailPresent)
+위와 같이 css 문법을 선언하고 ul 태그를 List 태그로 변경하여 작성한다.
+
+그리고,
+
+다음과 같이 a 태그와 href 속성을 Link 태그와 to를 사용하여 표현한다
+
 ```javascript
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -149,7 +214,9 @@ Styled-Reset (Global)
 > npm install styled-reset
 
 SC를 이용해 css를 초기화해서 0의 상태에서 시작한다
+
 다음과 같이 Globalstyles.js 파일에 Global css를 설정한다
+
 ```javascript
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
@@ -167,6 +234,7 @@ const globalStyles = createGlobalStyle`
 
 export default globalStyles;
 ```
+
 후에 App.js 파일에 <Router />와 같이 <GlobalStyles /> Component를 추가한다
 + import { something } from ~은 파일에서 export를 default가 아닌 const로 받았을 때 사용된다
 

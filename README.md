@@ -2,6 +2,8 @@
 
 Learning React and ES6 by building a Movie Discovery App.
 
+[기초개념: movie_app_react - README](https://github.com/joohaem/movie_app_react2021)
+
 ## Screens
 
 - [x] Home
@@ -162,7 +164,7 @@ import Header from "./Header";
 export default Header;
 ```
 
-CSS 모듈
+#### CSS 모듈
 
 -> className을 Randomize(임의화)화여 css가 local이 되도록
 
@@ -175,10 +177,12 @@ import styles from "./Header.module.css";
 <ul className={styles.navList}>
 ```
 
-Styled-Components (SC; Randomized, Local)
+#### Styled-Components (SC; Randomized, Local)
 > npm install styled-components
 
 js 파일 안에서 css와 js를 통합하여 작성할 수 있다.
+
+기본적으로 css 문법을 따라가고, & 문자를 사용하여 Sass처럼 자기 자신 선택이 가능하다.
 
 ```javascript
 import styled from "styled-components";
@@ -189,7 +193,7 @@ const List = styled.ul`
     background-color: blue;
   }
 `;
-```javascript
+
 <List>
 ~
 </List>
@@ -210,7 +214,7 @@ const SLink = styled(Link)``;
 <SLink to="/">Movies</SLink>
 ```
 
-Styled-Reset (Global)
+#### Styled-Reset (Global)
 > npm install styled-reset
 
 SC를 이용해 css를 초기화해서 0의 상태에서 시작한다
@@ -235,8 +239,9 @@ const globalStyles = createGlobalStyle`
 export default globalStyles;
 ```
 
-후에 App.js 파일에 <Router />와 같이 <GlobalStyles /> Component를 추가한다
-+ import { something } from ~은 파일에서 export를 default가 아닌 const로 받았을 때 사용된다
+후에 App.js 파일에 ```<Router />```와 같이 ```<GlobalStyles />``` Component를 추가한다
+
+```import { something } from ~```은 파일에서 export를 const로 받았을 때 사용된다
 
 ## Location Aware Header
 props를 넘겨줄 태그에
@@ -270,9 +275,13 @@ export default withRouter(({ location: { pathname } }) => (
 ));
 ```
 HeaderComponent가 withRouter라는 Component를 감싼 형태이므로 props를 가질 수 있다
+
 router의 location-pathname 속성을 가져와 "/~" 문자열과 비교하여 styled css를 제어한다
+
 (Router의 match, location, history 속성)
+
 위 export 코드는 다음과 같다
+
 ```javascript
 const HeaderComponent = ({ location: { pathname } }) => (
   <Header>
@@ -295,15 +304,23 @@ export default withRouter(HeaderComponent);
 
 ## API Networking with Axios
 (If you really need to hide the key then you might need to use a backend.)
+
 https://www.themoviedb.org/
+
 에서 로그인하여 Setting-API -> API key를 생성한다
+
 https://developers.themoviedb.org/3
+
 try it out -> API key로 SEND REQUEST하여 url 가져오기
 
 api.js 에 네트워킹과 API(url의 같은 부분)를 다룸으로써 효율적으로 Router 호출, fetch를 수행한다.
+
 >npm install axios
 
 Axois의 인스턴스의 baseURL, headers, timeout 같은 것들을 반복해서 작성하지 않게 해준다.
+
+params 객체는 api 주소 뒤 ```?api_key=~&language?=~``` 를 가리킨다
+
 ```javascript
 const api = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
@@ -317,9 +334,13 @@ api.get("tv/popular");
 
 export default api;
 ```
+
 위와 같이 API의 “tv/popular”를 ‘상대경로’로 지정하여 가져온다.
+
 index.js에 import “api”; 해주면 검사-네트워크에 Request가 된 것을 볼 수 있다.
+
 Axios document : https://github.com/axios/axios
+
 ```javascript
 export const moviesApi = {
   nowPlaying: () => api.get("movie/now_playing"),
@@ -339,12 +360,15 @@ export const moviesApi = {
     })
 };
 ```
-search에서 term을 검색할 때, 공백 및 기호를 URL에서 인코딩 해야 한다
+search에서 term을 검색할 때, 공백 및 기호(!,? 등)를 URL에서 인코딩 (%20, %21 등으로) 해야 한다
+
 -> encodeURIComponent() 이용
 
 ## Loading Emoji
 Emoji는 span으로 감싸져야 하고, image role이 있어야 하며, 접근성(스크린리더가 읽을 aria-label 속성)이 있어야 한다
+
 따라서 다음과 같이 export 한다
+
 ```javascript
 export default () => (
   <Container>
@@ -357,36 +381,56 @@ export default () => (
 
 ## Container Presenter Pattern
 클래스 component와 state로 DidMount에 API 데이터를 불러오고 렌더링 하는 방법은 애플리케이션이 작을 때나 사용한다
+
 여기서는, Container로 데이터, state를 가지고 API를 불러와 처리하고/
+
 Presenter가 데이터를 보여주는 역할을 하게 된다.
+
 -> Routes에 각 Container와 Presenter의 폴더를 만든다 (+ index.js)
 
 ### Container
-- Home, TV에서)
+- Home, TV )
+
 componentDidMount()에서 async, await로 API 불러와 setState() 하여 render() 한다
+
+(혹여나 크기가 커질 경우 함수로 빼내고 componentDidMount() 에서 this.로 호출한다)
+
+-> async, await: API가 리턴될 때까지, 데이터를 기다려주는 역할을 한다.
 
 -> state: object + component의 data를 넣을 공간 + 동적 데이터
 
 -> setState: react는 새로운 state로 render 함수를 다시 실행해 변화 있는 부분만 업데이트 (virtual DOM)
 
-- Search에서)
+- Search )
+
 handleSubmit 함수로 Term을 적고 Enter하면 searchByTerm 함수를 실행한다
 
-- Detail에서)
+- Detail )
+
 Router에
+
 ```javascript
 <Route path="/movie/:id" component={Detail} />
 <Route path="/show/:id" component={Detail} />
 ```
+
 추가한다. “:id”로 url을 설정한다.
 
 -> 이는 DetailComponent에서 props.match.params.id로 전달된다
 
 ### Presenter
 prop-types로 자료형 지정
+
 styled-components로 CSS 지정
+
+API로 받은 객체를 props로 받아 ```?.map((obj, idx) => <~ key={idx}></~>)``` 으로 펼쳐 나타낼 수 있다 (map() 할 때는 각 컴포넌트에 key 속성을 가져야 한다)
+
++
+
 Components/Section.js 파일에 title과 mapping할 children을 props로 만든다
+
 기본적으로 React Component는 children이라고 하는 optional prop을 가진다
+
 ```javascript
 const Section = ({ title, children }) => (
   <Container>
@@ -396,6 +440,7 @@ const Section = ({ title, children }) => (
 );
 ```
 -> Presenter에서 불러와 나타내고 children은 Secntion 태그 사이 내용을 불러온다
+
 Container 태그는 div 태그를 styled한 네이밍이다
 
 ## SearchPresenter
@@ -404,17 +449,25 @@ Container 태그는 div 태그를 styled한 네이밍이다
 
 ## 영화 이미지 API에서 불러오기
 API의 값으로 Container의 state를 설정한다
+
 -> 이를 Presenter의 props로 넣어 보여준다
+
 -> Presenter 중간의 Poster 컴포넌트의 props로 imageUrl을 넣어준다
+
 ```javascript
 imageUrl = {show.poster_path}
 ```
+
 -> poster_path 혹은 backdrop_path 등은 검사창에서 확인한다
+
 -> Poster에서 API에서 제공한 url 앞과 ${imageUrl}을 합쳐 Image (div)태그의 props로 넣어준다
+
 ```javascript
 bgUrl = `https://image.tmdb.org/t/p/w300${imageUrl}`
 ```
+
 -> 이를 Image (div)태그의 css 속성으로 넣어준다
+
 ```css
 background-image: url(${props => props.bgUrl});
 ```
@@ -423,8 +476,11 @@ background-image: url(${props => props.bgUrl});
 >npm install react-helmet
 
 Helmet은 웹 사이트의 head를 수정하기 쉽다
+
 예를 들어 Joamflix의 head title을 Detail 페이지로 들어가면 영화 제목을 덧붙인 head title로 변경할 수 있다
+
 -> Presenter에서 최상위 Fragment를 만들고, 자식으로 Helmet 태그를 생성한다
+
 ```javascript
 (<>
 <Helmet>

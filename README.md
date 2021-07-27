@@ -276,6 +276,8 @@ export default withRouter(({ location: { pathname } }) => (
 ```
 HeaderComponent가 withRouter라는 Component를 감싼 형태이므로 props를 가질 수 있다
 
+- Passing props to a component wrapped in withRouter() : ```= withRouter(({history, ...props}) => ();```
+
 router의 location-pathname 속성을 가져와 "/~" 문자열과 비교하여 styled css를 제어한다
 
 (Router의 match, location, history 속성)
@@ -364,6 +366,17 @@ search에서 term을 검색할 때, 공백 및 기호(!,? 등)를 URL에서 인�
 
 -> encodeURIComponent() 이용
 
+위와 같은 API를 Container의 componentDidMount()에서 async, await로 불러오면 ```console.log()```로 확인이 가능하다
+```javascript
+{
+  data: Array(706), 
+  status: 200, 
+  statusText: "", 
+  headers: Object, 
+  config: Object…
+}
+```
+
 ## Loading Emoji
 Emoji는 span으로 감싸져야 하고, image role이 있어야 하며, 접근성(스크린리더가 읽을 aria-label 속성)이 있어야 한다
 
@@ -414,7 +427,7 @@ Router에
 <Route path="/show/:id" component={Detail} />
 ```
 
-추가한다. “:id”로 url을 설정한다.
+추가한다. “:id”로 패턴이 매칭되어 url을 설정한다. (/movie/1, /movie/a 등)
 
 -> 이는 DetailComponent에서 props.match.params.id로 전달된다
 

@@ -521,4 +521,22 @@ Helmet은 웹 사이트의 head를 수정하기 쉽다
 ```
 
 ## 배포하기
-gh-pages 설치 사용 or Netlify 서비스 이용하기
+gh-pages 설치 사용 [movie-app-react2021](https://github.com/joohaem/movie_app_react2021)
+
+or
+
+**Netlify** 서비스 이용하기 (package.json의 homepage 주소 바꾸기)
+
+1. BrowserRouter 사용할 때는
+basename 속성을 다음과 같이 추가해주시면 됩니다.
+조건: package.json의 homepage 속성에 주소를 추가해 줘야 함.
+
+2. Netilify 빌드 중, treating warnings as errors because process.env.ci = true.
+와 같은 에러때문에 컴파일이 실패한다면,
+Netilify 메뉴 중에 Site setting 메뉴에 들어가셔서
+Build & Deploy -> Edit Setting -> Build Command에서
+CI=false yarn build 혹은 CI=false npm run build로 업데이트 해주시면 됩니다.
+
+3. 만약 Deploy를 성공했는데도, 사이트 화면이 아예 뜨지않는 경우,
+package.json 파일에 들어가서 homepage 속성에
+netilify가 준 주소를 입력하고 push하면 됩니다.

@@ -32,7 +32,7 @@
       "react-app/jest"
     ]
   },
-  "homepage": "https://joohaem.github.io/joamflix",
+  "homepage": "https://xenodochial-wright-ed3962.netlify.app/",
   "browserslist": {
     "production": [
       ">0.2%",

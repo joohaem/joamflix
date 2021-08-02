@@ -10,14 +10,18 @@ export default class extends React.Component {
     // 생성자가 끝나기 전까지 this.props 는
     // undefined 가 될 것
     const {
+      match: {
+        params: { id }
+      },
       location: { pathname }
     } = props;
     this.state = {
       result: null,
       error: null,
       loading: true,
-      isMovie: pathname.includes("/movie/")
+      isMovie: pathname.includes("/movie/"),
       // this.로 변수를 선언하여 "함수"가 아닌 "클래스"의 변수로
+      id
     };
   }
 
@@ -48,8 +52,6 @@ export default class extends React.Component {
         // result = request.data;
         ({ data: result } = await tvApi.showDetail(parsedId));
       }
-      // console.log(requset);
-      console.log(result);
     } catch {
       this.setState({ error: "Can't find anything." });
     } finally {
@@ -59,8 +61,7 @@ export default class extends React.Component {
   }
 
   render() {
-    const { result, error, loading } = this.state;
-    // console.log(result);
-    return <DetailPresenter result={result} error={error} loading={loading} />;
+    const { result, error, loading, isMovie, id } = this.state;
+    return <DetailPresenter result={result} error={error} loading={loading} isMovie={isMovie} id={id} />;
   }
 }

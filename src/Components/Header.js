@@ -25,7 +25,7 @@ const Item = styled.li`
   height: 50px;
   text-align: center;
   border-bottom: 3px solid
-    ${props => (props.current ? "#3498db" : "transparent")};
+    ${props => (props.current ? "#ffd54f" : "transparent")};
   transition: border-bottom 0.5s ease-in-out;
 `;
 
@@ -39,10 +39,10 @@ const SLink = styled(Link)`
 const HeaderComponent = ({ location: { pathname } }) => (
   <Header>
     <List>
-      <Item current={pathname === "/"}>
+      <Item current={pathname === "/" || pathname.includes("/movie")}>
         <SLink to="/">Movies</SLink>
       </Item>
-      <Item current={pathname === "/tv"}>
+      <Item current={pathname === "/tv" || pathname.includes("/show")}>
         <SLink to="/tv">TV</SLink>
       </Item>
       <Item current={pathname === "/search"}>

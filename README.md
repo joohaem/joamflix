@@ -26,11 +26,11 @@ Learning React and ES6 by building a Movie Discovery App.
 
 ## Code Challenges
 
-- [ ] IMDB Link
-- [ ] Tabs inside of Movie / Show Details (YT Videos, Production Company & Countries)
+- [x] IMDB Link
+- [x] Tabs inside of Movie / Show Details (YT Videos, Production Company & Countries)
 - [ ] Collections Link
 - [ ] /collections Route
-- [ ] On TV Show, show seasons and creators
+- [x] On TV Show, show seasons and creators
 
 <hr/>
 <hr/>
@@ -68,16 +68,33 @@ Router는 url을 확인하고 그에 맞는 Component(페이지)를 불러오게
 또한 Router 태그는 한 자식 태그만 갖는다.
 ```javascript
 return (
-<HashRouter>
-<Route path="/" exact={true} component={Home} />
-<Route path="/about" component={About} />
-</HashRouter>
+  <HashRouter>
+    <Route path="/" exact={true} component={Home} />
+    <Route path="/about" component={About} />
+  </HashRouter>
 );
 ```
 HashRouter(#)가 아닌 BrowserRouter는 github pages에 업로드하기 번거롭다
 HashRouter는 웹이 아닌 앱에 있다는 느낌을 줌, 페이지의 Hash를 사용한다
 -> a 태그 대신 Link 태그를 이용한다 (새로고침을 막아줌)
 BrowserRouter는 HTML history API를 사용한다
+
+ex) 다음과 같이 Link 태그와 Route 태그를 한 component에 작성할 수 있다
+
+```javascript
+<InsideMenu>
+  <List>
+    <Item active={pathname === `/coins/${coin.id}/markets`}>
+      <Link to={`/coins/${coin.id}/markets`}>Markets</Link>
+    </Item>
+    <Item active={pathname === `/coins/${coin.id}/exchanges`}>
+      <Link to={`/coins/${coin.id}/exchanges`}>Exchanges</Link>
+    </Item>
+  </List>
+</InsideMenu>
+<Route path="/coins/:id/markets" component={Markets} />
+<Route path="/coins/:id/exchanges" component={Exchanges} />
+```
 
 ## Router Composition (render)
 Composition은 두 개 이상의 Route를 Rendering한다
@@ -429,7 +446,7 @@ Router에
 
 추가한다. “:id”로 패턴이 매칭되어 url을 설정한다. (/movie/1, /movie/a 등)
 
--> 이는 DetailComponent에서 props.match.params.id로 전달된다
+-> 이는 DetailComponent에서 **props.match의 params.id**로 전달된다
 
 ### Presenter
 prop-types로 자료형 지정

@@ -2,6 +2,11 @@
 
 Learning React and ES6 by building a Movie Discovery App.
 
+Link :
+
+- https://xenodochial-wright-ed3962.netlify.app/#/
+- https://joohaem.github.io/joamflix/#/
+
 [기초개념: movie_app_react - README](https://github.com/joohaem/movie_app_react2021)
 
 ## Screens
